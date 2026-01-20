@@ -1,52 +1,44 @@
 # title2025
 
-![Build](https://github.com/hirofumi/title2025/workflows/Build/badge.svg)
-[![Version](https://img.shields.io/jetbrains/plugin/v/MARKETPLACE_ID.svg)](https://plugins.jetbrains.com/plugin/MARKETPLACE_ID)
-[![Downloads](https://img.shields.io/jetbrains/plugin/d/MARKETPLACE_ID.svg)](https://plugins.jetbrains.com/plugin/MARKETPLACE_ID)
-
-## Template ToDo list
-- [x] Create a new [IntelliJ Platform Plugin Template][template] project.
-- [ ] Get familiar with the [template documentation][template].
-- [ ] Adjust the [pluginGroup](./gradle.properties) and [pluginName](./gradle.properties), as well as the [id](./src/main/resources/META-INF/plugin.xml) and [sources package](./src/main/kotlin).
-- [ ] Adjust the plugin description in `README` (see [Tips][docs:plugin-description])
-- [ ] Review the [Legal Agreements](https://plugins.jetbrains.com/docs/marketplace/legal-agreements.html?from=IJPluginTemplate).
-- [ ] [Publish a plugin manually](https://plugins.jetbrains.com/docs/intellij/publishing-plugin.html?from=IJPluginTemplate) for the first time.
-- [ ] Set the `MARKETPLACE_ID` in the above README badges. You can obtain it once the plugin is published to JetBrains Marketplace.
-- [ ] Set the [Plugin Signing](https://plugins.jetbrains.com/docs/intellij/plugin-signing.html?from=IJPluginTemplate) related [secrets](https://github.com/JetBrains/intellij-platform-plugin-template#environment-variables).
-- [ ] Set the [Deployment Token](https://plugins.jetbrains.com/docs/marketplace/plugin-upload.html?from=IJPluginTemplate).
-- [ ] Click the <kbd>Watch</kbd> button on the top of the [IntelliJ Platform Plugin Template][template] to be notified about releases containing new features and fixes.
-- [ ] Configure the [CODECOV_TOKEN](https://docs.codecov.com/docs/quick-start) secret for automated test coverage reports on PRs
-
 <!-- Plugin description -->
-This Fancy IntelliJ Platform Plugin is going to be your implementation of the brilliant ideas that you have.
-
-This specific section is a source for the [plugin.xml](/src/main/resources/META-INF/plugin.xml) file which will be extracted by the [Gradle](/build.gradle.kts) during the build process.
-
-To keep everything working, do not remove `<!-- ... -->` sections. 
+Reflects OSC 0/1/2 window titles in terminal tab names for IntelliJ IDEA's Reworked terminal.
 <!-- Plugin description end -->
+
+This is a workaround for [IJPL-197056](https://youtrack.jetbrains.com/issue/IJPL-197056) and [IJPL-221050](https://youtrack.jetbrains.com/issue/IJPL-221050).
+
+> [!NOTE]
+> This plugin relies on internal implementation details of the IntelliJ Terminal due to a lack of public APIs.
+> They may change without notice, so this plugin can break even in minor IDE updates.
+
+## Requirements
+
+- IntelliJ IDEA 2025.3.1 or later (or compatible IDE)
 
 ## Installation
 
-- Using the IDE built-in plugin system:
+1. Download ZIP from [Releases](https://github.com/hirofumi/title2025/releases)
+2. Settings → Plugins → ⚙️ → Install Plugin from Disk...
 
-  <kbd>Settings/Preferences</kbd> > <kbd>Plugins</kbd> > <kbd>Marketplace</kbd> > <kbd>Search for "title2025"</kbd> >
-  <kbd>Install</kbd>
+## Usage
 
-- Using JetBrains Marketplace:
+The plugin works automatically when:
 
-  Go to [JetBrains Marketplace](https://plugins.jetbrains.com/plugin/MARKETPLACE_ID) and install it by clicking the <kbd>Install to ...</kbd> button in case your IDE is running.
+- Terminal engine is set to "Reworked 2025"
+- `terminal.show.application.title` is enabled in Advanced Settings
 
-  You can also download the [latest release](https://plugins.jetbrains.com/plugin/MARKETPLACE_ID/versions) from JetBrains Marketplace and install it manually using
-  <kbd>Settings/Preferences</kbd> > <kbd>Plugins</kbd> > <kbd>⚙️</kbd> > <kbd>Install plugin from disk...</kbd>
+Any terminal program that sets the window title will update the tab name.
 
-- Manually:
+## Development
 
-  Download the [latest release](https://github.com/hirofumi/title2025/releases/latest) and install it manually using
-  <kbd>Settings/Preferences</kbd> > <kbd>Plugins</kbd> > <kbd>⚙️</kbd> > <kbd>Install plugin from disk...</kbd>
+### Requirements
 
+- JDK 21
 
----
-Plugin based on the [IntelliJ Platform Plugin Template][template].
+### Commands
 
-[template]: https://github.com/JetBrains/intellij-platform-plugin-template
-[docs:plugin-description]: https://plugins.jetbrains.com/docs/intellij/plugin-user-experience.html#plugin-description-and-presentation
+```bash
+./gradlew build        # Build
+./gradlew buildPlugin  # Build plugin ZIP (build/distributions/)
+./gradlew runIde       # Run in sandbox IDE
+./gradlew test         # Test
+```
